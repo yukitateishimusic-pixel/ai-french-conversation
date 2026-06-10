@@ -2,62 +2,75 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>立石くんの楽しいフランス語会話アプリ</title>
+<title>フランス語発音練習アプリ</title>
+
 <style>
 body{
-  font-family: Arial, sans-serif;
-  text-align:center;
-  padding:20px;
+    font-family:Arial,sans-serif;
+    text-align:center;
+    padding:30px;
+    background:#f4f4f4;
 }
-#chat{
-  width:80%;
-  margin:auto;
-  border:1px solid #ccc;
-  padding:15px;
-  min-height:200px;
+
+#result{
+    margin-top:20px;
+    padding:20px;
+    background:white;
+    border-radius:10px;
+    min-height:100px;
+    font-size:24px;
 }
 </style>
 </head>
+
 <body>
 
-<h1>🇫🇷立石くんの楽しいフランス語会話アプリ🇯🇵</h1>
+<h1>🇫🇷 フランス語発音練習アプリ 🇫🇷</h1>
 
-<div id="chat">
-<p><b>先生:</b> Bonjour !</p>
+<p>🎤ボタンを押してフランス語を話してください</p>
+
+<button onclick="startRecognition()">🎤 録音開始</button>
+
+<div id="result">
+ここに認識結果が表示されます
 </div>
 
-<input type="text" id="userInput">
-<button onclick="sendMessage()">送信</button>
-
 <script>
-function sendMessage() {
+function startRecognition(){
 
-var input = document.getElementById("userInput").value;
-var chat = document.getElementById("chat");
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
 
-chat.innerHTML += "<p><b>あなた:</b> " + input + "</p>";
-
-var reply = "Très bien !";
-var jp = "いいですね！";
-
-if(input.toLowerCase().indexOf("bonjour") >= 0){
-  reply = "Bonjour !";
-  jp = "こんにちは！";
+if(!SpeechRecognition){
+    alert("このブラウザは音声認識に対応していません");
+    return;
 }
 
-if(input.toLowerCase().indexOf("merci") >= 0){
-  reply = "De rien !";
-  jp = "どういたしまして！";
-}
+const recognition = new SpeechRecognition();
 
-chat.innerHTML +=
-"<p><b>先生:</b> " +
-reply +
-"<br>🇯🇵 " +
-jp +
-"</p>";
+recognition.lang = "fr-FR";
+recognition.interimResults = false;
+recognition.maxAlternatives = 1;
 
-document.getElementById("userInput").value = "";
+recognition.start();
+
+document.getElementById("result").innerHTML =
+"聞き取り中...";
+
+recognition.onresult = function(event){
+
+const text = event.results[0][0].transcript;
+
+document.getElementById("result").innerHTML =
+"🇫🇷 " + text;
+};
+
+recognition.onerror = function(){
+document.getElementById("result").innerHTML =
+"認識できませんでした";
+};
+
 }
 </script>
 
