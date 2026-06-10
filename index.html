@@ -1,38 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<title>フランス語発音練習アプリ</title>
+<h1>🇫🇷 フランス語センテンス練習 🇫🇷</h1>
 
-<style>
-body{
-    font-family:Arial,sans-serif;
-    text-align:center;
-    padding:30px;
-    background:#f4f4f4;
-}
-
-#result{
-    margin-top:20px;
-    padding:20px;
-    background:white;
-    border-radius:10px;
-    min-height:100px;
-    font-size:24px;
-}
-</style>
-</head>
-
-<body>
-
-<h1>🇫🇷 フランス語発音練習アプリ 🇫🇷</h1>
-
-<p>🎤ボタンを押してフランス語を話してください</p>
-
-<button onclick="startRecognition()">🎤 録音開始</button>
+<button onclick="startRecognition()">🎤 話す</button>
 
 <div id="result">
-ここに認識結果が表示されます
+<h3>認識した文章</h3>
 </div>
 
 <script>
@@ -43,36 +14,22 @@ window.SpeechRecognition ||
 window.webkitSpeechRecognition;
 
 if(!SpeechRecognition){
-    alert("このブラウザは音声認識に対応していません");
+    alert("音声認識に対応していません");
     return;
 }
 
 const recognition = new SpeechRecognition();
 
 recognition.lang = "fr-FR";
-recognition.interimResults = false;
-recognition.maxAlternatives = 1;
-
 recognition.start();
-
-document.getElementById("result").innerHTML =
-"聞き取り中...";
 
 recognition.onresult = function(event){
 
 const text = event.results[0][0].transcript;
 
-document.getElementById("result").innerHTML =
-"🇫🇷 " + text;
-};
+document.getElementById("result").innerHTML +=
+"<p>" + text + "</p>";
 
-recognition.onerror = function(){
-document.getElementById("result").innerHTML =
-"認識できませんでした";
 };
-
 }
 </script>
-
-</body>
-</html>
