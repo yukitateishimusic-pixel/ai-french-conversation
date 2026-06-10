@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>テスト</title>
+<title>立石くんの楽しいフランス語会話アプリ</title>
+<style>
+body{
+  font-family: Arial, sans-serif;
+  text-align:center;
+  padding:20px;
+}
+#chat{
+  width:80%;
+  margin:auto;
+  border:1px solid #ccc;
+  padding:15px;
+  min-height:200px;
+}
+</style>
 </head>
 <body>
-<h1>表示テスト成功！</h1>
+
+<h1>🇫🇷立石くんの楽しいフランス語会話アプリ🇯🇵</h1>
+
+<div id="chat">
+<p><b>先生:</b> Bonjour !</p>
+</div>
+
+<input type="text" id="userInput">
+<button onclick="sendMessage()">送信</button>
+
+<script>
+function sendMessage() {
+
+var input = document.getElementById("userInput").value;
+var chat = document.getElementById("chat");
+
+chat.innerHTML += "<p><b>あなた:</b> " + input + "</p>";
+
+var reply = "Très bien !";
+var jp = "いいですね！";
+
+if(input.toLowerCase().indexOf("bonjour") >= 0){
+  reply = "Bonjour !";
+  jp = "こんにちは！";
+}
+
+if(input.toLowerCase().indexOf("merci") >= 0){
+  reply = "De rien !";
+  jp = "どういたしまして！";
+}
+
+chat.innerHTML +=
+"<p><b>先生:</b> " +
+reply +
+"<br>🇯🇵 " +
+jp +
+"</p>";
+
+document.getElementById("userInput").value = "";
+}
+</script>
+
 </body>
 </html>
